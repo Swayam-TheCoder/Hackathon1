@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Disaster Prep — School Demo</title>
+  <style>
+    :root{--accent:#0b6efd;--muted:#6b7280;--bg:#f7fafc}
+    *{box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto, "Helvetica Neue", Arial; margin:0; color:#0f1724; background:var(--bg)}
+    header{background:linear-gradient(90deg,#062e6d 0%, #0b6efd 100%); color:#fff; padding:18px 20px}
+    .container{max-width:1100px;margin:20px auto;padding:0 16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:48px;height:48px;background:#fff;border-radius:10px;display:grid;place-items:center;color:var(--accent);font-weight:700}
+    .header{min-width: 10px;font-size: 30px;}
+    nav{margin-left:auto}
+    nav a{color:rgba(255,255,255,0.95);text-decoration:none;margin-left:14px;font-weight:600}
+
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:36px 0}
+    .card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 6px 20px rgba(15,23,36,0.06)}
+    h1{margin:0 0 10px;font-size:28px}
+    p.lead{color:var(--muted);margin:0 0 14px}
+    .cta-row{display:flex;gap:12px}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.18)}
+
+    /* feature grid */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+    .feature{padding:12px;border-radius:10px}
+    .feature h4{margin:6px 0}
+
+    /* responsive */
+    @media (max-width:980px){.hero{grid-template-columns:1fr} .features{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.features{grid-template-columns:1fr} header{padding:12px} .brand span{display:none}}
+
+    /* main layout */
+    main{display:grid;grid-template-columns:2fr 1fr;gap:20px}
+    section{min-height:200px}
+
+    /* modules list */
+    .modules{display:flex;flex-direction:column;gap:12px}
+    .module{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid #eef2ff}
+    .module .meta{display:flex;flex-direction:column}
+    .module small{color:var(--muted)}
+
+    /* quiz card */
+    .quiz{display:grid;gap:10px}
+    .quiz button{padding:10px;border-radius:8px;border:1px solid #e6eefc;background:#fff;cursor:pointer;text-align:left}
+
+    /* admin dashboard mock */
+    .admin-stats{display:flex;gap:10px;flex-wrap:wrap}
+    .stat{flex:1;min-width:120px;padding:12px;border-radius:8px;background:#fff;text-align:center}
+
+    /* emergency panel */
+    .emerg{position:sticky;top:20px}
+    .emerg .phone{display:flex;gap:12px;align-items:center}
+
+    footer{margin:28px 0 80px;color:var(--muted);text-align:center}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;place-items:center;background:rgba(2,6,23,0.5);z-index:40}
+    .modal.open{display:grid}
+    .modal .box{width:94%;max-width:520px;background:#fff;padding:18px;border-radius:12px}
+
+    /* small utilities */
+    .chip{display:inline-block;padding:6px 8px;border-radius:999px;background:#eef2ff;color:#0b6efd;font-weight:700}
+    .progress{height:10px;background:#eef2ff;border-radius:8px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,#0b6efd,#60a5fa);width:0%}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex;align-items:center">
+      <div class="brand">
+        <div class="logo">DP</div>
+        <div class="header">
+          <div style="font-weight:800">DisasterPrep</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.9)">School Safety Prototype</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#modules">Modules</a>
+        <a href="#drill">Drill</a>
+        <a href="#admin">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <section class="hero">
+      <div>
+        <div class="card">
+          <h1>Teach. Drill. Save lives.</h1>
+          <p class="lead">Interactive disaster education, region-specific alerts, and virtual drills — made for schools and colleges.</p>
+          <div class="cta-row">
+            <button class="btn" id="start-tour">Try a Drill</button>
+          </div>
+          <div class="features">
+            <div class="feature card">
+              <div class="chip">Interactive</div>
+              <h4>Learning Modules</h4>
+              <small>Short lessons & quizzes</small>
+            </div>
+            <div class="feature card">
+              <div class="chip">Simulate</div>
+              <h4>Virtual Drills</h4>
+              <small>Scenario-based practice</small>
+            </div>
+            <div class="feature card">
+              <div class="chip">Track</div>
+              <h4>Admin Dashboard</h4>
+              <small>Monitor participation</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3 style="margin-top:0">Quick Start</h3>
+          <p class="lead">Select your region and try a short earthquake drill (simulated) or play a gamified quiz.</p>
+          <label style="display:block;margin-bottom:8px">Select Region</label>
+          <select id="region" style="width:100%;padding:10px;border-radius:8px;border:1px solid #e6eefc;margin-bottom:12px">
+            <option value="north">North - Seismic Zone IV</option>
+            <option value="south">South - Flood-prone</option>
+            <option value="coastal">Coastal - Cyclone risk</option>
+          </select>
+          <div style="display:flex;gap:10px">
+            <button class="btn" id="start-drill">Start Earthquake Drill</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="card">
+          <h4 style="margin:0 0 6px">Emergency Contacts</h4>
+          <div class="phone">
+            <div style="flex:1">
+              <div style="font-weight:700">School Helpline</div>
+              <div style="font-size:13px;color:var(--muted)">+91 98765 43210</div>
+            </div>
+            <button class="btn ghost" id="call-sim" style="background-color: #030303; margin: 5px; font-size:10px;">Simulate Call</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section>
+        <div id="modules" class="card">
+          <h3 style="margin-top:0">Learning Modules</h3>
+          <div class="modules" id="modules-list">
+            <!-- modules injected by JS -->
+          </div>
+        </div>
+
+        <div id="drill" class="card" style="margin-top:14px">
+          <h3 style="margin-top:0">Virtual Drill — Earthquake (Simulated)</h3>
+          <p class="lead">This drill demonstrates sequence of actions in case of an earthquake. It’s a safe simulated flow for training.</p>
+          <div id="drill-flow" style="display:flex;flex-direction:column;gap:12px">
+            <!-- flow steps -->
+          </div>
+        </div>
+
+        <div id="quiz-card" class="card" style="margin-top:14px">
+          <h3 style="margin-top:0">Gamified Quiz</h3>
+          <div class="quiz" id="quiz-area">
+            <!-- quiz injected -->
+          </div>
+        </div>
+      </section>
+
+      <aside class="emerg">
+        <div id="admin" class="card">
+          <h4 style="margin-top:0">Admin Dashboard (mock)</h4>
+          <div class="admin-stats">
+            <div class="stat">
+              <div style="font-size:28px;font-weight:800" id="score-avg">76%</div>
+              <div style="font-size:12px;color:var(--muted)">Avg Preparedness</div>
+            </div>
+            <div class="stat">
+              <div style="font-size:28px;font-weight:800" id="participants">124</div>
+              <div style="font-size:12px;color:var(--muted)">Drill Participants</div>
+            </div>
+            <div class="stat">
+              <div style="font-size:28px;font-weight:800" id="drills-count">6</div>
+              <div style="font-size:12px;color:var(--muted)">Drills This Year</div>
+            </div>
+          </div>
+          <div style="margin-top:12px">
+            <div class="progress" aria-hidden="true"><i id="progress-bar" style="width:76%"></i></div>
+            <div style="font-size:12px;color:var(--muted);margin-top:6px">Target: 90% readiness</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h4 style="margin-top:0">Region Alerts</h4>
+          <div id="alert-area"><small class="lead" style="color:var(--muted)">No active alerts</small></div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      Prototype for hackathon — built with HTML, CSS & vanilla JS. Use it as a starting point and extend features like push notifications, authentication, and real-time comms.
+    </footer>
+  </div>
+
+  <!-- Modal / Drill -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="box card">
+      <h3 id="modal-title">Drill</h3>
+      <div id="modal-body"></div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px">
+        <button class="btn ghost" id="modal-close">Close</button>
+        <button class="btn" id="modal-next">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ---------- Mock data ---------- */
+    const modules = [
+      {id:'m1',title:'Earthquake Basics',desc:'How earthquakes occur and safe actions (DROP, COVER, HOLD).',time:'8 min'},
+      {id:'m2',title:'Flood Safety',desc:'Prepare kits, evacuation routes and safe zones.',time:'6 min'},
+      {id:'m3',title:'Fire Response',desc:'Evacuation lines, stop-drop-roll and assembly points.',time:'7 min'},
+    ];
+
+    const quiz = {
+      q:[
+        {q:'During an earthquake you should?',choices:['Run outside immediately','Drop, Cover & Hold','Stand in doorway'],a:1},
+        {q:'Best place in flood is?',choices:['Top floor / safe zone','Basement','Ground floor'],a:0},
+        {q:'If clothes catch fire you should?',choices:['Run fast','Jump in water','Stop, Drop and Roll'],a:2},
+      ]
+    }
+
+    /* ---------- DOM helpers ---------- */
+    const el = id => document.getElementById(id);
+
+    function renderModules(){
+      const list = el('modules-list');
+      list.innerHTML = '';
+      modules.forEach(m=>{
+        const div = document.createElement('div'); div.className='module';
+        div.innerHTML = `<div class=meta><strong>${m.title}</strong><small>${m.desc}</small></div><div><small>${m.time}</small><div style=height:6px></div><button style="color: white; background-color: rgb(11, 110, 253);" class='btn ghost' data-id='${m.id}'>Start</button></div>`;
+        list.appendChild(div);
+      })
+    }
+
+    function renderQuiz(){
+      const area = el('quiz-area'); area.innerHTML='';
+      quiz.q.forEach((item,i)=>{
+        const btn = document.createElement('button');
+        btn.textContent = `Q${i+1}: ${item.q}`;
+        btn.onclick = () => openQuiz(i);
+        area.appendChild(btn);
+      })
+    }
+
+    function openQuiz(index){
+      const modal = el('modal'); modal.classList.add('open'); el('modal-title').textContent = 'Quiz';
+      const q = quiz.q[index];
+      el('modal-body').innerHTML = `<p style="font-weight:700">${q.q}</p>` + q.choices.map((ch,i)=>`<div style='margin:8px 0'><label><input type=radio name=ans value=${i}> ${ch}</label></div>`).join('');
+      el('modal-next').onclick = ()=>{
+        const checked = document.querySelector('input[name=ans]:checked');
+        if(!checked){alert('Please choose an answer'); return}
+        const val = Number(checked.value);
+        const correct = val===q.a;
+        alert(correct? 'Correct ✅' : 'Incorrect ❌');
+        modal.classList.remove('open');
+      }
+    }
+
+    /* ---------- Drill flow ---------- */
+    const drillSteps = [
+      {title:'Alert',text:'Simulated alert: Earthquake tremors detected. Stay calm.'},
+      {title:'Drop',text:'Drop to the ground. Get on hands and knees.'},
+      {title:'Cover',text:'Take cover under sturdy furniture and protect your head.'},
+      {title:'Hold',text:'Hold on until shaking stops. Move to open area when safe.'},
+      {title:'Check',text:'Check for injuries, call for help using emergency contacts.'},
+    ];
+
+    let currentStep = 0;
+    function startDrill(){
+      currentStep = 0; openStep();
+    }
+    function openStep(){
+      const modal = el('modal'); modal.classList.add('open'); el('modal-title').textContent = drillSteps[currentStep].title;
+      el('modal-body').innerHTML = `<p>${drillSteps[currentStep].text}</p><p style='font-size:12px;color:var(--muted)'>Step ${currentStep+1} of ${drillSteps.length}</p>`;
+      el('modal-next').textContent = currentStep===drillSteps.length-1? 'Finish' : 'Next';
+      el('modal-next').onclick = ()=>{
+        currentStep++;
+        if(currentStep>=drillSteps.length){
+          el('modal').classList.remove('open');
+          // track participation mock
+          incrementParticipants();
+          alert('Drill complete — well done!');
+        } else openStep();
+      }
+    }
+
+    el('modal-close').addEventListener('click', ()=>el('modal').classList.remove('open'));
+
+    /* ---------- admin mocks ---------- */
+    function incrementParticipants(){
+      const p = Number(el('participants').textContent)||0; el('participants').textContent = p+1;
+      const avg = Math.min(100, Number(el('score-avg').textContent.replace('%','')) + 0.5);
+      el('score-avg').textContent = Math.round(avg)+ '%';
+      el('progress-bar').style.width = Math.round(avg)+'%';
+    }
+
+    /* ---------- alerts (region-specific) ---------- */
+    function setRegionAlerts(region){
+      const area = el('alert-area');
+      if(region==='coastal') area.innerHTML = '<div style="color:#b91c1c;font-weight:700">Advisory: Cyclone watch in 24hrs — review evacuation routes.</div>';
+      else if(region==='north') area.innerHTML = '<div style="color:#b91c1c;font-weight:700">Reminder: Seismic safety checklist — Drop, Cover, Hold.</div>';
+      else area.innerHTML = '<div style="color:#0369a1;font-weight:700">No active alerts</div>';
+    }
+
+    /* ---------- emergency call simulate ---------- */
+    el('call-sim').addEventListener('click', ()=>{
+      alert('Dialing School Helpline... (simulated)');
+    })
+
+    /* ---------- wire up buttons ---------- */
+    el('start-drill').addEventListener('click', ()=>{ startDrill(); });
+    el('start-tour').addEventListener('click', ()=> startDrill());
+    el('play-quiz').addEventListener('click', ()=> renderQuiz() );
+    el('view-demo').addEventListener('click', ()=>{ window.scrollTo({top:document.querySelector('#modules').offsetTop-20,behavior:'smooth'}) });
+    el('region').addEventListener('change', (e)=> setRegionAlerts(e.target.value));
+
+    // load
+    renderModules(); renderQuiz(); setRegionAlerts(el('region').value);
+
+    // attach module start buttons (event delegation)
+    document.addEventListener('click', (ev)=>{
+      if(ev.target.matches('.module .btn') || ev.target.matches('.module button')){
+        const id = ev.target.dataset.id; const m = modules.find(x=>x.id===id);
+        if(m){ el('modal').classList.add('open'); el('modal-title').textContent = m.title; el('modal-body').innerHTML = `<p>${m.desc}</p><p style='font-size:13px;color:var(--muted)'>Estimated time: ${m.time}</p>`; el('modal-next').onclick = ()=>{ el('modal').classList.remove('open'); } }
+      }
+    })
+
+    // responsiveness small tweak: collapse nav on mobile if needed (simple)
+  </script>
+</body>
+</html>
